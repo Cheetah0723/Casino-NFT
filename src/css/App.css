@@ -1,0 +1,194 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css";
+
+@font-face {
+  font-family: "Nosifer";
+  src: local("Nosifer"), url("../Nosifer-Regular.ttf") format("truetype");
+  font-weight: bold;
+}
+
+.App {
+  text-align: center;
+  background-image: url(../img/bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.ui.container {
+  width: 80% !important;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  /* background-color: #222; */
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-family: "Nosifer";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 87px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-body {
+  background: #2e0404;
+}
+
+.App-mainbody {
+  background-image: url(../img/game-bg.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 3em;
+}
+
+.App-investors {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 3em;
+}
+
+.current-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sparkle {
+  background-image: url(../img/current-money.svg);
+  /* background-size: contain; */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 45px;
+  font-family: "Vollkorn SC";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 54px;
+  line-height: 75px;
+  display: flex;
+  align-items: center;
+  color: #ebb700;
+}
+
+.target-less {
+  font-family: "Vidaloka";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 36px;
+  color: #ffffff;
+}
+.btn-group {
+  margin: 2em;
+}
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 2em 0;
+  flex-wrap: wrap;
+}
+.ui.form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ui.form .field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ui.form .input {
+  margin: 0 1em;
+}
+
+.ui.form .input .label {
+  width: 50px;
+}
+.flex-direction {
+  flex-direction: column;
+}
+.flex-direction h3 {
+  color: #ffffff !important
+  ;
+}
+
+.ui.header {
+  font-family: "Nosifer";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px !important;
+  color: #ebb700;
+  margin: 1em 0;
+}
+
+.history {
+  background: #0e0e0e;
+  padding: 3em 0;
+}
+
+.ui.header:first-child {
+  margin-top: 0px !important;
+}
+
+.history-table {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ui.table {
+  width: 90%;
+  border: none !important;
+  border-radius: 0px !important;
+  margin: 1em 0;
+  background-color: #2e0404 !important;
+}
+
+.ui.table td {
+  font-family: "Vidaloka";
+  font-size: 20px;
+}
+
+.ui.table td.negative,
+.ui.table tr.negative {
+  background: #110000 !important;
+  color: #ff0606 !important;
+}
+.ui.table td.positive,
+.ui.table tr.positive {
+  background: #1b0000 !important;
+  color: #06bb15 !important;
+}
+
+.ui.table thead th {
+  background: #2e0404;
+  font-family: "Vidaloka";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  color: #ebb700;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
