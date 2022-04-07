@@ -86,9 +86,15 @@ class App extends Component {
       //take decimal mod 10,001
       result = result % 1100
       var resultFormart = (
-        result < 10
-          ? "000"
-          : (result < 100 ? "00" : result < 1000 ? "0" : "") + result.toString()
+        result == 0
+          ? "0000"
+          : (result < 10
+              ? "000"
+              : result < 100
+              ? "00"
+              : result < 1000
+              ? "0"
+              : "") + result.toString()
       ).split("")
       if (result < this.state.target) {
         //win
