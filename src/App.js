@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import "./css/App.css";
-import investor from "./img/investors.svg";
-import board from "./img/board.png";
+import React, { Component } from "react"
+import "./css/App.css"
+import investor from "./img/investors.svg"
+import board from "./img/board.png"
 import {
   Container,
   Icon,
@@ -16,84 +16,88 @@ import {
   Modal,
   Segment,
   Image,
-} from "semantic-ui-react";
+} from "semantic-ui-react"
 
-var crypto = require("crypto");
+var crypto = require("crypto")
 
 var currentTimeHash = crypto
   .createHash("sha256")
   .update(`${Date.now()}`)
-  .digest("hex");
+  .digest("hex")
 
 class App extends Component {
   handleChange(event) {
-    this.setState({ seed: event.target.value });
+    this.setState({ seed: event.target.value })
   }
 
   updateMultiplier(event) {
-    var pct = 100 / event.target.value;
-    var odds = pct;
+    var pct = 100 / event.target.value
+    var odds = pct
 
     this.setState({
       multiplier: event.target.value,
       target: ((odds / 100) * 1100).toFixed(1),
-    });
+    })
   }
 
   updateBet(event) {
-    this.setState({ bet: event.target.value });
+    this.setState({ bet: event.target.value })
   }
 
   randomizeSeed() {
     this.setState({
       seed: crypto.createHash("sha256").update(`${Date.now()}`).digest("hex"),
-    });
+    })
   }
 
   handleBet() {
     //clear error state
-    this.setState({ errorMessage: "" });
+    this.setState({ errorMessage: "" })
 
     //first, check if bet is less than zero
     if (this.state.bet < 0) {
-      this.setState({ errorMessage: "bet can't be less than zero" });
+      this.setState({ errorMessage: "bet can't be less than zero" })
     } else if (isNaN(this.state.bet)) {
-      this.setState({ errorMessage: "bet is not a number" });
+      this.setState({ errorMessage: "bet is not a number" })
     } else if (this.state.balance - this.state.bet < 0) {
-      this.setState({ errorMessage: "insufficient balance!" });
+      this.setState({ errorMessage: "insufficient balance!" })
     } else {
       //good to bet now
 
       //first deduct bet from balance
-      var bet = this.state.bet;
-      var balance = this.state.balance - bet;
+      var bet = this.state.bet
+      var balance = this.state.balance - bet
 
-      var timestamp = Date.now();
-      var nonce = (Math.random() * 11000).toFixed(0);
+      var timestamp = Date.now()
+      var nonce = (Math.random() * 11000).toFixed(0)
 
       //first hash seed + current time + math.random
       var resultHash = crypto
         .createHash("sha256")
         .update(this.state.seed + "_" + timestamp + "_" + nonce)
-        .digest("hex");
+        .digest("hex")
 
       //take first 10 bits of result hash
-      resultHash = resultHash.substring(0, 10);
+      resultHash = resultHash.substring(0, 10)
 
       //convert 10 hex bits to decimal
-      var result = parseInt(resultHash, 16);
+      var result = parseInt(resultHash, 16)
 
       //take decimal mod 10,001
-      result = result % 1100;
-
+      result = result % 1100
+      var resultFormart = (
+        result < 10
+          ? "000"
+          : (result < 100 ? "00" : result < 1000 ? "0" : "") + result.toString()
+      ).split("")
       if (result < this.state.target) {
         //win
         this.setState({
           resultColor: "green",
-          lastRoll: result,
+          lastRoll: resultFormart,
           lastTarget: this.state.target,
           balance: balance + bet * this.state.multiplier,
-        });
+        })
 
         this.state.betHistory.push({
           result: result,
@@ -103,20 +107,20 @@ class App extends Component {
           timestamp: timestamp,
           seed: this.state.seed,
           nonce: nonce,
-        });
+        })
 
         //clean up array after 20 bets (to preserve memory)
         if (this.state.betHistory.length > 20) {
-          this.setState({ betHistory: this.state.betHistory.slice(1) });
+          this.setState({ betHistory: this.state.betHistory.slice(1) })
         }
       } else {
         //loss
         this.setState({
           resultColor: "red",
-          lastRoll: result,
+          lastRoll: resultFormart,
           lastTarget: this.state.target,
           balance: balance,
-        });
+        })
 
         this.state.betHistory.push({
           result: result,
@@ -126,18 +130,18 @@ class App extends Component {
           timestamp: timestamp,
           seed: this.state.seed,
           nonce: nonce,
-        });
+        })
 
         //clean up array after 20 bets (to preserve memory)
         if (this.state.betHistory.length > 20) {
-          this.setState({ betHistory: this.state.betHistory.slice(1) });
+          this.setState({ betHistory: this.state.betHistory.slice(1) })
         }
       }
     }
   }
 
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       balance: 1000.0,
@@ -146,16 +150,16 @@ class App extends Component {
       bet: 1,
       seed: currentTimeHash,
       errorMessage: "",
-      lastRoll: "0000",
+      lastRoll: ["0", "0", "0", "0"],
       lastTarget: "550",
       resultColor: "grey",
       betHistory: [],
-    };
+    }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.randomizeSeed = this.randomizeSeed.bind(this);
-    this.updateMultiplier = this.updateMultiplier.bind(this);
-    this.updateBet = this.updateBet.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.randomizeSeed = this.randomizeSeed.bind(this)
+    this.updateMultiplier = this.updateMultiplier.bind(this)
+    this.updateBet = this.updateBet.bind(this)
   }
 
   render() {
@@ -196,8 +200,14 @@ class App extends Component {
                     <i className="angle left icon"></i>
                   </Icon>
                 </div>
-                <Image src={board} />
-                <Statistic.Value>{this.state.lastRoll}</Statistic.Value>
+                <div className="board">
+                  <Image src={board} className="board-img" />
+                  <Statistic.Value className="board-result">
+                    {this.state.lastRoll.map((val, idx) => (
+                      <div key={idx}>{val}</div>
+                    ))}
+                  </Statistic.Value>
+                </div>
               </Statistic>
 
               <div className="btn-group">
@@ -219,13 +229,31 @@ class App extends Component {
               <div className="input-group">
                 <div className="flex-direction">
                   <h3> BET AMOUNT</h3>
-                  <Input
-                    value={this.state.bet}
-                    onChange={this.updateBet}
-                    label="SOL"
-                    labelPosition="left"
-                    placeholder="your bet"
-                  />
+                  <div className="times-btns">
+                    <Input
+                      value={this.state.bet}
+                      onChange={this.updateBet}
+                      label="SOL"
+                      labelPosition="left"
+                      placeholder="your bet"
+                    />
+                    <Button
+                      onClick={() => this.setState({ bet: this.state.bet / 2 })}
+                      size="large"
+                      color="red"
+                      className="times-btn"
+                    >
+                      1/2
+                    </Button>
+                    <Button
+                      onClick={() => this.setState({ bet: this.state.bet * 2 })}
+                      size="large"
+                      color="green"
+                      className="times-btn"
+                    >
+                      2X
+                    </Button>
+                  </div>
                 </div>
                 <Form>
                   <Form.Field inline>
@@ -272,20 +300,6 @@ class App extends Component {
                   <p>{this.state.errorMessage}</p>
                 </Message>
               )}
-              <Button
-                onClick={() => this.setState({ bet: this.state.bet * 2 })}
-                size="large"
-                color="green"
-              >
-                Double
-              </Button>
-              <Button
-                onClick={() => this.setState({ bet: this.state.bet / 2 })}
-                size="large"
-                color="red"
-              >
-                Halve
-              </Button>
             </div>
             <div className="App-investors">
               <Image src={investor} />
@@ -414,15 +428,15 @@ class App extends Component {
                       </Table.Cell> */}
                         </Table.Row>
                       </Table.Body>
-                    );
+                    )
                   })}
               </Table>
             </div>
           </div>
         </Container>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

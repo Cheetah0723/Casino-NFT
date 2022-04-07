@@ -123,8 +123,10 @@
   flex-direction: column;
 }
 .flex-direction h3 {
-  color: #ffffff !important
-  ;
+  color: #ffffff !important;
+  font-size: 24px;
+  font-family: "Courier New", Courier, monospace;
+  margin-top: 15px;
 }
 
 .ui.header {
@@ -191,4 +193,44 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.board {
+  position: relative;
+}
+
+.board-img {
+  width: 600px;
+  margin: 20px;
+}
+
+.board-result {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 60px;
+  padding: 42px 64px;
+  font-family: "Nosifer";
+  color: rgb(168, 5, 5);
+  font-size: 90px;
+  display: flex;
+}
+
+.board-result div {
+  width: 25%;
+}
+
+.times-btns {
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.times-btns input {
+  outline: none !important;
+}
+
+.times-btn {
+  padding: 9px 15px !important;
 }
